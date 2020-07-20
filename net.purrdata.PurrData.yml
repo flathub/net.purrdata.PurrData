@@ -40,12 +40,16 @@ modules:
 - name: purr-data
   buildsystem: autotools
   subdir: pd/src
-  config-opts: [ '--disable-portaudio', '--enable-alsa', '--enable-oss', '--enable-jack' ]
+  config-opts: [ '--disable-portaudio', '--enable-alsa', '--disable-oss', '--disable-jack' ]
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
     tag: 2.12.0
     commit: aeb24d8910da8ea5dc3bf3619e49d74f8e350cf7
+  - type: patch
+    path: patch/alsa-adddev.patch
+  - type: patch
+    path: patch/alsa-debug.patch
   - type: patch
     path: patch/gnu-make-parallel.patch
   - type: patch
@@ -148,6 +152,8 @@ modules:
     path: net.purrdata.PurrData.metainfo.xml
   - type: file
     path: default.settings
+  - type: patch
+    path: patch/flatpak-alsa-pulse.patch
 
 cleanup:
   - /include/*

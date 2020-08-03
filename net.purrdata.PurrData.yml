@@ -47,10 +47,6 @@ modules:
     tag: 2.12.0
     commit: aeb24d8910da8ea5dc3bf3619e49d74f8e350cf7
   - type: patch
-    path: patch/alsa-adddev.patch
-  - type: patch
-    path: patch/alsa-debug.patch
-  - type: patch
     path: patch/gnu-make-parallel.patch
   - type: patch
     path: patch/no-rsync-during-install.patch

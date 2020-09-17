@@ -2,7 +2,7 @@
 
 This is a Flatpak for [Purr Data](https://www.purrdata.net/).
 
-Purr Data is a popular fork of the [Pure Data](http://puredata.info/), an open
+Purr Data is a popular fork of [Pure Data](http://puredata.info/), an open
 source visual programming language for multimedia.
 
 ## How to build

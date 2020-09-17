@@ -44,6 +44,7 @@
   </description>
   <screenshots>
     <screenshot type="default">
+      <image type="source">https://git.purrdata.net/samthursfield/flatpak-net.purrdata.PurrData/raw/master/screenshots/beatmangle.png</image>
       <image type="source">https://git.purrdata.net/samthursfield/flatpak-net.purrdata.PurrData/raw/master/screenshots/pd-parody-2.png</image>
     </screenshot>
   </screenshots>

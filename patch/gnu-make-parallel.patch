@@ -1,4 +1,4 @@
-commit d6d1ab75860f4dac457b98a024b24615f0e996c9
+commit da0a5981514c1b47e631c8070cb12e67b87f2820
 Author: Sam Thursfield <sam@afuera.me.uk>
 Date:   Wed Dec 4 23:39:45 2019 +0100
 
@@ -19,10 +19,10 @@ Date:   Wed Dec 4 23:39:45 2019 +0100
     `make`.
 
 diff --git a/externals/Makefile b/externals/Makefile
-index 64361086..2b6d036f 100644
+index d9d40b22..bdb67504 100644
 --- a/externals/Makefile
 +++ b/externals/Makefile
-@@ -312,89 +312,89 @@ aka.wiiremote_clean:
+@@ -312,50 +312,50 @@ aka.wiiremote_clean:
  #------------------------------------------------------------------------------#
  # APPLE
  apple:
@@ -85,6 +85,8 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------#
+@@ -376,40 +376,40 @@ bendinfix_clean:
+ #------------------------------------------------------------------------------#
  # BOIDS
  boids:
 -	make -C $(externals_src)/boids PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
@@ -133,7 +135,7 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -436,13 +436,13 @@ creb_clean:
+@@ -451,13 +451,13 @@ creb_clean:
  #------------------------------------------------------------------------------#
  # CXC
  cxc:
@@ -150,7 +152,7 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -451,16 +451,16 @@ cxc_clean:
+@@ -466,16 +466,16 @@ cxc_clean:
  # AG: this external provides no sane way to pass custom CFLAGS, so we abuse
  # WARN_CFLAGS for that purpose.
  cyclone:
@@ -170,7 +172,7 @@ index 64361086..2b6d036f 100644
  		clean
  
  #------------------------------------------------------------------------------#
-@@ -472,50 +472,50 @@ ifneq ($(OS_NAME),darwin)
+@@ -487,50 +487,50 @@ ifneq ($(OS_NAME),darwin)
  		./configure --with-python=python2 && make
  endif
  endif
@@ -232,7 +234,7 @@ index 64361086..2b6d036f 100644
  
  fftease_install:
  	#make -C $(externals_src)/$(FFTEASE_NAME) DESTDIR="$(DESTDIR)" \
-@@ -537,7 +537,7 @@ fftease_install:
+@@ -552,7 +552,7 @@ fftease_install:
  		$(DESTDIR)$(objectsdir)/$(FFTEASE_NAME)
  
  fftease_clean:
@@ -241,7 +243,7 @@ index 64361086..2b6d036f 100644
  
  #------------------------------------------------------------------------------#
  # FLATGUI
-@@ -546,16 +546,16 @@ fftease_clean:
+@@ -561,16 +561,16 @@ fftease_clean:
  # external directory for compatibility
  #
  flatgui:
@@ -261,7 +263,7 @@ index 64361086..2b6d036f 100644
  
  #------------------------------------------------------------------------------#
  # FLEXT and FLEXT externals
-@@ -634,26 +634,26 @@ flib_clean:
+@@ -649,26 +649,26 @@ flib_clean:
  # FLUID~
  
  fluid:
@@ -294,7 +296,7 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------
-@@ -677,7 +677,7 @@ $(gem_src)/Gem.dll: $(gem_src)/configure
+@@ -692,7 +692,7 @@ $(gem_src)/Gem.dll: $(gem_src)/configure
  		--prefix=$(prefix) \
  		--libdir=$(objectsdir) \
  		--with-pd=$(DESTDIR)
@@ -303,7 +305,7 @@ index 64361086..2b6d036f 100644
  
  $(gem_src)/Gem.pd_linux: $(gem_src)/configure
  	test -s $(gem_src)/Gem.pd_linux || \
-@@ -687,7 +687,7 @@ $(gem_src)/Gem.pd_linux: $(gem_src)/configure
+@@ -702,7 +702,7 @@ $(gem_src)/Gem.pd_linux: $(gem_src)/configure
  			--with-video=plugins \
  			--with-film=plugins \
  			--with-pd=$(pd_src)
@@ -312,7 +314,7 @@ index 64361086..2b6d036f 100644
  
  $(gem_src)/Gem.pd_darwin: $(gem_src)/configure
  	cd $(gem_src) && ./configure \
-@@ -701,16 +701,16 @@ $(gem_src)/Gem.pd_darwin: $(gem_src)/configure
+@@ -716,16 +716,16 @@ $(gem_src)/Gem.pd_darwin: $(gem_src)/configure
  		--with-video=plugins \
  		--with-film=plugins \
  		--with-pd=$(pd_src)
@@ -332,7 +334,7 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -754,27 +754,27 @@ gem2pdp_clean:
+@@ -769,27 +769,27 @@ gem2pdp_clean:
  #------------------------------------------------------------------------------#
  # GGEE
  ggee:
@@ -366,7 +368,7 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1139,13 +1139,13 @@ jasch_lib_clean:
+@@ -1154,13 +1154,13 @@ jasch_lib_clean:
  #------------------------------------------------------------------------------#
  # LOADERS-LIBDIR
  loaders-libdir:
@@ -383,7 +385,7 @@ index 64361086..2b6d036f 100644
  
  #------------------------------------------------------------------------------#
  # LYON
-@@ -1155,7 +1155,7 @@ LYON_SRC=lyonpotpourri
+@@ -1170,7 +1170,7 @@ LYON_SRC=lyonpotpourri
  LYON_DEST=lyonpotpourri
  
  lyonpotpourri:
@@ -392,7 +394,7 @@ index 64361086..2b6d036f 100644
  
  lyonpotpourri_install:
  	#make -C $(externals_src)/$(LYON_SRC) DESTDIR="$(DESTDIR)" \
-@@ -1191,52 +1191,52 @@ endif
+@@ -1206,52 +1206,52 @@ endif
  		$(DESTDIR)$(objectsdir)/$(LYON_DEST)
  
  lyonpotpourri_clean:
@@ -458,7 +460,7 @@ index 64361086..2b6d036f 100644
  
  
  
-@@ -1300,26 +1300,26 @@ moocow_clean:
+@@ -1315,26 +1315,26 @@ moocow_clean:
  #------------------------------------------------------------------------------#
  # MOONLIB
  moonlib:
@@ -491,7 +493,7 @@ index 64361086..2b6d036f 100644
  
  
  
-@@ -1402,25 +1402,25 @@ oscx_clean:
+@@ -1418,25 +1418,25 @@ oscx_clean:
  #------------------------------------------------------------------------------#
  # PAN
  pan:
@@ -523,8 +525,8 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1430,25 +1430,25 @@ LUA_CFLAGS = $(shell (pkg-config --cflags lua5.3 || pkg-config --cflags lua5.2 |
- LUA_LIBS = $(shell (pkg-config --libs lua5.3 || pkg-config --libs lua5.2 || pkg-config --libs lua) 2> /dev/null)
+@@ -1446,25 +1446,25 @@ LUA_CFLAGS = $(shell (pkg-config --cflags lua5.4 || pkg-config --cflags lua5.3 |
+ LUA_LIBS = $(shell (pkg-config --libs lua5.4 || pkg-config --libs lua5.3 || pkg-config --libs lua5.2 || pkg-config --libs lua) 2> /dev/null)
  
  pdlua:
 -	make -C $(externals_src)/pd-lua LUA_CFLAGS="$(LUA_CFLAGS)" LUA_LIBS="$(LUA_LIBS)" PD_PATH="$(pd_src)" PD_LIB="$(pd_src)/src" CFLAGS="$(CFLAGS)"
@@ -555,7 +557,7 @@ index 64361086..2b6d036f 100644
  
  
  
-@@ -1508,7 +1508,7 @@ pdp_clean:
+@@ -1524,7 +1524,7 @@ pdp_clean:
  PDP_OPENGL_NAME=3dp
  PDP_OPENGL_BINARY := $(externals_src)/pdp/opengl/pdp_opengl.$(EXTENSION)
  $(PDP_OPENGL_BINARY): $(externals_src)/pdp/Makefile.config
@@ -564,7 +566,7 @@ index 64361086..2b6d036f 100644
  
  pdp_opengl: $(PDP_OPENGL_BINARY)
  	echo $(PDP_OPENGL_BINARY)
-@@ -1542,7 +1542,7 @@ ifeq ($(OS_NAME),darwin)
+@@ -1558,7 +1558,7 @@ ifeq ($(OS_NAME),darwin)
  endif
  
  pdp_opengl_clean:
@@ -573,7 +575,7 @@ index 64361086..2b6d036f 100644
  	-rm -f -- $(PDP_OPENGL_BINARY)
  	-rm -f -- $(externals_src)/pdp_opengl/*.bak
  	-rm -f -- $(externals_src)/pdp_opengl/*.*~
-@@ -1602,25 +1602,25 @@ pidip_clean:
+@@ -1618,25 +1618,25 @@ pidip_clean:
  #------------------------------------------------------------------------------#
  # PLUGIN
  plugin:
@@ -605,7 +607,7 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1667,7 +1667,7 @@ rjlib_clean:
+@@ -1683,7 +1683,7 @@ rjlib_clean:
  rtcmix:
  	cd $(externals_src)/rtcmix-in-pd/RTcmix-pd-4.0.1.6 \
  		&& ./configure && make
@@ -614,7 +616,7 @@ index 64361086..2b6d036f 100644
  		PD_PATH=$(pd_src) \
  		CFLAGS="$(CFLAGS)" \
  		LINUXINCLUDE=-I$(pd_src)/src
-@@ -1684,32 +1684,32 @@ rtcmix_install:
+@@ -1700,32 +1700,32 @@ rtcmix_install:
  		$(DESTDIR)/$(objectsdir)/rtcmix
  
  rtcmix_clean:
@@ -655,7 +657,7 @@ index 64361086..2b6d036f 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1732,7 +1732,7 @@ tclpd_install: tclpd
+@@ -1748,7 +1748,7 @@ tclpd_install: tclpd
  #		$(DESTDIR)$(examplesdir)/$(TCLPD_NAME)
  
  tclpd_clean:
@@ -664,7 +666,7 @@ index 64361086..2b6d036f 100644
  	-rm -f -- $(TCLPD_LIB)
  	-rm -f -- $(externals_src)/tclpd/*.bak
  	-rm -f -- $(externals_src)/tclpd/*.*~
-@@ -1741,14 +1741,14 @@ tclpd_clean:
+@@ -1757,14 +1757,14 @@ tclpd_clean:
  #------------------------------------------------------------------------------#
  # TKWIDGETS
  tkwidgets:
@@ -682,7 +684,7 @@ index 64361086..2b6d036f 100644
  
  #------------------------------------------------------------------------------#
  # TOF
-@@ -1807,51 +1807,51 @@ toxy_clean:
+@@ -1823,51 +1823,51 @@ toxy_clean:
  #------------------------------------------------------------------------------#
  # UNAUTHORIZED
  unauthorized:
@@ -746,7 +748,7 @@ index 64361086..2b6d036f 100644
  
  
  
-@@ -2334,13 +2334,13 @@ iemxmlrpc_clean:
+@@ -2350,13 +2350,13 @@ iemxmlrpc_clean:
  #------------------------------------------------------------------------------#
  # EARPLUG
  earplug:
@@ -763,7 +765,7 @@ index 64361086..2b6d036f 100644
  
  
  
-@@ -2360,7 +2360,7 @@ etags:
+@@ -2376,7 +2376,7 @@ etags:
  	etags --append --language=none --regex="/proc[ \t]+\([^ \t]+\)/\1/" \
  		$(externals_src)/unauthorized/*/*.tk
  	find /usr/include -type f -name \*.h -exec etags -a '{}' \;

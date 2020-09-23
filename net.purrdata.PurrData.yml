@@ -4,18 +4,20 @@ runtime-version: '20.08'
 sdk: org.freedesktop.Sdk
 default-branch: stable
 command: pd-wrapper.sh
-finish-args: [
-    # Display
-    '--share=ipc', '--socket=x11', '--socket=wayland', '--device=dri',
-    # Audio access
-    '--socket=pulseaudio',
-    # Filesystem access (pd doesn't yet work with portals)
-    '--filesystem=host',
-    # MIDI access (Flatpak doesn't yet support exposing only MIDI devices)
-    '--device=all',
-    # Linux Audio plugins
-    '--env=LADSPA_PATH=/app/extensions/Plugins/ladspa'
-]
+finish-args:
+# Display
+- '--share=ipc'
+- '--socket=x11'
+- '--socket=wayland'
+- '--device=dri'
+# Audio access
+- '--socket=pulseaudio'
+# Filesystem access (pd doesn't yet work with portals)
+- '--filesystem=host'
+# MIDI access (Flatpak doesn't yet support exposing only MIDI devices)
+- '--device=all'
+# Linux Audio plugins
+- '--env=LADSPA_PATH=/app/extensions/Plugins/ladspa:/app/extensions/LadspaPlugins/ladspa'
 add-extensions:
   org.freedesktop.LinuxAudio.Plugins:
     directory: extensions/Plugins

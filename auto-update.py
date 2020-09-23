@@ -102,7 +102,7 @@ def main():
        ''').strip().format(
            tag=tag,
            old_tag=old_tag,
-           url=vim_source['url'],
+           url=source['url'],
        )))
 
 

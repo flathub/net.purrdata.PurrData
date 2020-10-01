@@ -6,18 +6,18 @@ default-branch: stable
 command: pd-wrapper.sh
 finish-args:
 # Display
-- '--share=ipc'
-- '--socket=x11'
-- '--socket=wayland'
-- '--device=dri'
+- --share=ipc
+- --socket=x11
+- --socket=wayland
+- --device=dri
 # Audio access
-- '--socket=pulseaudio'
+- --socket=pulseaudio
 # Filesystem access (pd doesn't yet work with portals)
-- '--filesystem=host'
+- --filesystem=host
 # MIDI access (Flatpak doesn't yet support exposing only MIDI devices)
-- '--device=all'
+- --device=all
 # Linux Audio plugins
-- '--env=LADSPA_PATH=/app/extensions/Plugins/ladspa:/app/extensions/LadspaPlugins/ladspa'
+- --env=LADSPA_PATH=/app/extensions/Plugins/ladspa:/app/extensions/LadspaPlugins/ladspa
 add-extensions:
   org.freedesktop.LinuxAudio.Plugins:
     directory: extensions/Plugins
@@ -28,19 +28,19 @@ add-extensions:
     no-autodownload: true
 
 modules:
-- "shared-modules/lua5.3/lua-5.3.5.json"
+- shared-modules/lua5.3/lua-5.3.5.json
 # (optional) For fluidsynth
-- "shared-modules/linux-audio/ladspa.json"
-- "fluidsynth.json"
+- shared-modules/linux-audio/ladspa.json
+- fluidsynth.json
 - name: purr-data
   buildsystem: autotools
   subdir: pd/src
-  config-opts: [ '--disable-portaudio', '--enable-alsa', '--disable-oss', '--disable-jack' ]
+  config-opts: [--disable-portaudio, --enable-alsa, --disable-oss, --disable-jack]
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
-    tag: 2.14.0
-    commit: db34c008dcee8d776aaba119154d2ab56d8aac28
+    tag: 2.15.0-2-gca0bd3a0
+    commit: ca0bd3a0f95bb73b9d4fe0e1efc756b66cdd759b
   - type: patch
     path: patch/gnu-make-parallel.patch
   - type: patch
@@ -84,8 +84,8 @@ modules:
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
-    tag: 2.14.0
-    commit: db34c008dcee8d776aaba119154d2ab56d8aac28
+    tag: 2.15.0-2-gca0bd3a0
+    commit: ca0bd3a0f95bb73b9d4fe0e1efc756b66cdd759b
 
 - name: pd-abstractions
   buildsystem: simple
@@ -95,8 +95,8 @@ modules:
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
-    tag: 2.14.0
-    commit: db34c008dcee8d776aaba119154d2ab56d8aac28
+    tag: 2.15.0-2-gca0bd3a0
+    commit: ca0bd3a0f95bb73b9d4fe0e1efc756b66cdd759b
 
 - name: purr-data-integration
   buildsystem: simple
@@ -126,8 +126,8 @@ modules:
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
-    tag: 2.14.0
-    commit: db34c008dcee8d776aaba119154d2ab56d8aac28
+    tag: 2.15.0-2-gca0bd3a0
+    commit: ca0bd3a0f95bb73b9d4fe0e1efc756b66cdd759b
   - type: file
     # Using an binary x86_64 build of nw.js makes me sad. There are ARM packages
     # available from the nw.js website. For other platforms, it's difficult but
@@ -146,8 +146,8 @@ modules:
     path: patch/flatpak-alsa-pulse.patch
 
 cleanup:
-  - /include/*
-  - /lib/pd-l2ork/Makefile.am
-  - /lib/pd-l2ork/README.txt
-  - /lib/pd-l2ork/bin/todo.txt
-  - /lib/pd-l2ork/bin/nw/credits.html
+- /include/*
+- /lib/pd-l2ork/Makefile.am
+- /lib/pd-l2ork/README.txt
+- /lib/pd-l2ork/bin/todo.txt
+- /lib/pd-l2ork/bin/nw/credits.html

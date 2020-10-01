@@ -5,7 +5,6 @@
 # See: https://discourse.lathub.org/t/tools-for-automatically-updating-flatpak-packaging/736/
 
 import argparse
-import collections
 import os
 import re
 import subprocess
@@ -14,7 +13,7 @@ import textwrap
 import ruamel.yaml
 
 HERE = os.path.abspath(os.path.dirname(__file__))
-VIM_CLONE = os.path.join(HERE, 'purr-data')
+CLONE = os.path.join(HERE, 'purr-data')
 MANIFEST = os.path.join(HERE, 'net.purrdata.PurrData.yml')
 APPDATA = os.path.join(HERE, 'net.purrdata.PurrData.metainfo.xml')
 
@@ -43,15 +42,13 @@ def main():
     with open(MANIFEST, 'r') as f:
         manifest = yaml.load(f)
 
-    if not os.path.isdir(VIM_CLONE):
-        run(('git', 'clone', vim_source['url'], VIM_CLONE))
-
-    os.chdir(VIM_CLONE)
+    os.chdir(CLONE)
     run(('git', 'pull'))
-    sha = run_and_read(('git', 'show-ref', '--hash', 'HEAD'))
-    tag = run_and_read(('git', 'describe', '--tags', 'HEAD'))
+    sorted_tags = run_and_read(('git', 'tag', '-l', '--sort=-creatordate'))
+    tag = sorted_tags.split('\n')[0]
+    sha = run_and_read(('git', 'show-ref', '--hash', tag))
     date = run_and_read(('git', 'log', '-1', '--date=short',
-                         '--pretty=format:%cd'))
+                         '--pretty=format:%cd', tag))
     os.chdir(HERE)
 
     # Patch manifest

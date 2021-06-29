@@ -39,8 +39,8 @@ modules:
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
-    tag: 2.15.0
-    commit: bc0d70c7f990cb6a89fc9cd016f7e7090e13d278
+    tag: 2.17.0
+    commit: ca592f6f37335508b3681a7477e529ee5d92aaf2
   - type: patch
     path: patch/gnu-make-parallel.patch
   - type: patch
@@ -84,8 +84,8 @@ modules:
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
-    tag: 2.15.0
-    commit: bc0d70c7f990cb6a89fc9cd016f7e7090e13d278
+    tag: 2.17.0
+    commit: ca592f6f37335508b3681a7477e529ee5d92aaf2
 
 - name: pd-abstractions
   buildsystem: simple
@@ -95,8 +95,8 @@ modules:
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
-    tag: 2.15.0
-    commit: bc0d70c7f990cb6a89fc9cd016f7e7090e13d278
+    tag: 2.17.0
+    commit: ca592f6f37335508b3681a7477e529ee5d92aaf2
 
 - name: purr-data-integration
   buildsystem: simple
@@ -126,8 +126,8 @@ modules:
   sources:
   - type: git
     url: https://github.com/agraef/purr-data/
-    tag: 2.15.0
-    commit: bc0d70c7f990cb6a89fc9cd016f7e7090e13d278
+    tag: 2.17.0
+    commit: ca592f6f37335508b3681a7477e529ee5d92aaf2
   - type: file
     # Using an binary x86_64 build of nw.js makes me sad. There are ARM packages
     # available from the nw.js website. For other platforms, it's difficult but

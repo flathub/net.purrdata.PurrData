@@ -21,3 +21,13 @@ During development you can also run a build without installing it, like this:
     flatpak-builder --run build net.purrdata.PurrData.yml pd-l2ork
 
 See the [Flatpak manual](http://docs.flatpak.org/en/latest/) for more information.
+
+## Version update process
+
+1. Make sure purr-data repo is available:
+
+     git clone https://github.com/agraef/purr-data/
+
+2. Install [`hub` commandline tool](https://github.com/github/hub)
+
+3. Run `./auto-update.py`

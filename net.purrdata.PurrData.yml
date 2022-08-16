@@ -44,7 +44,7 @@ modules:
   - type: git
     url: https://github.com/agraef/purr-data/
     tag: 2.17.0
-    commit: ca592f6f37335508b3681a7477e529ee5d92aaf2
+    commit: 1cc4aab71e1b5006ac45629b6d2b1ec250a92f03
     x-checker-data:
       # Auto updates using https://github.com/flathub/flatpak-external-data-checker
       type: git
@@ -94,7 +94,7 @@ modules:
   - type: git
     url: https://github.com/agraef/purr-data/
     tag: 2.17.0
-    commit: ca592f6f37335508b3681a7477e529ee5d92aaf2
+    commit: 1cc4aab71e1b5006ac45629b6d2b1ec250a92f03
     x-checker-data:
       type: git
       tag-pattern: "^([\\d.]+)$"
@@ -108,7 +108,7 @@ modules:
   - type: git
     url: https://github.com/agraef/purr-data/
     tag: 2.17.0
-    commit: ca592f6f37335508b3681a7477e529ee5d92aaf2
+    commit: 1cc4aab71e1b5006ac45629b6d2b1ec250a92f03
     x-checker-data:
       type: git
       tag-pattern: "^([\\d.]+)$"
@@ -142,7 +142,7 @@ modules:
   - type: git
     url: https://github.com/agraef/purr-data/
     tag: 2.17.0
-    commit: ca592f6f37335508b3681a7477e529ee5d92aaf2
+    commit: 1cc4aab71e1b5006ac45629b6d2b1ec250a92f03
     x-checker-data:
       type: git
       tag-pattern: "^([\\d.]+)$"

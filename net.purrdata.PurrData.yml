@@ -2,7 +2,6 @@ id: net.purrdata.PurrData
 runtime: org.freedesktop.Platform
 runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
-default-branch: stable
 command: pd-wrapper.sh
 finish-args:
 # Display
@@ -18,6 +17,8 @@ finish-args:
 - --filesystem=host
 # MIDI access (Flatpak doesn't yet support exposing only MIDI devices)
 - --device=all
+# Seems to be needed.
+- --system-talk-name=org.freedesktop.UPower
 # Linux Audio plugins
 - --env=LADSPA_PATH=/app/extensions/Plugins/ladspa:/app/lib/ladspa
 add-extensions:
@@ -113,6 +114,29 @@ modules:
       type: git
       tag-pattern: "^([\\d.]+)$"
 
+# The binary for nwjs aarch64 needs libgconf
+- name: gconf
+  only-arches:
+    - aarch64
+  cleanup:
+    - /bin
+    - /libexec
+    - /share
+    - /etc
+  config-opts:
+    - --disable-static
+    - --disable-gtk-doc
+    - --disable-orbit
+    - --disable-introspection
+  modules:
+    - shared-modules/intltool/intltool-0.51.json
+    - shared-modules/dbus-glib/dbus-glib.json
+    - shared-modules/gtk2/gtk2.json
+  sources:
+    - type: archive
+      url: https://download.gnome.org/sources/GConf/3.2/GConf-3.2.6.tar.xz
+      sha256: 1912b91803ab09a5eed34d364bf09fe3a2a9c96751fde03a4e0cfa51a04d784c
+
 - name: purr-data-integration
   buildsystem: simple
   build-commands:
@@ -147,11 +171,21 @@ modules:
       type: git
       tag-pattern: "^([\\d.]+)$"
   - type: file
+    # See below for aarch64
     # Using an binary x86_64 build of nw.js makes me sad. There are ARM packages
     # available from the nw.js website. For other platforms, it's difficult but
     # possible to build nw.js and Chromium from source, good luck!
     url: https://dl.nwjs.io/v0.42.3/nwjs-v0.42.3-linux-x64.tar.gz
     sha256: 4802a3a32767ff8908aef8e91e11d81e7b515b32a09c9ab82c09edf91e49d99e
+    only-arches:
+      - x86_64
+    dest-filename: nwjs.tar.gz
+  - type: file
+    # The aarch64 binary use the one upstream uses for debian packages.
+    url: https://github.com/LeonardLaszlo/nw.js-armv7-binaries/releases/download/v0.23.7/nwjs-sdk-without-nacl-v0.23.7-linux-arm64.tar.gz
+    sha256: 3c5a85f7e4de5688f0ba53254497ba617dd44b56f6efb7049d36a30a0b99bba3
+    only-arches:
+      - aarch64
     dest-filename: nwjs.tar.gz
     # FIXME: there is an upstream version of this file but the maintainers don't update
     # the <releases> section. We need to autogenerate this section somehow, see

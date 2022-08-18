@@ -114,6 +114,29 @@ modules:
       type: git
       tag-pattern: "^([\\d.]+)$"
 
+# The binary for nwjs aarch64 needs libgconf
+- name: gconf
+  only-arches:
+    - aarch64
+  cleanup:
+    - /bin
+    - /libexec
+    - /share
+    - /etc
+  config-opts:
+    - --disable-static
+    - --disable-gtk-doc
+    - --disable-orbit
+    - --disable-introspection
+  modules:
+    - shared-modules/intltool/intltool-0.51.json
+    - shared-modules/dbus-glib/dbus-glib.json
+    - shared-modules/gtk2/gtk2.json
+  sources:
+    - type: archive
+      url: https://download.gnome.org/sources/GConf/3.2/GConf-3.2.6.tar.xz
+      sha256: 1912b91803ab09a5eed34d364bf09fe3a2a9c96751fde03a4e0cfa51a04d784c
+
 - name: purr-data-integration
   buildsystem: simple
   build-commands:

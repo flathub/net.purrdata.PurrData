@@ -3,26 +3,26 @@ Author: Sam Thursfield <sam@afuera.me.uk>
 Date:   Wed Dec 4 23:39:45 2019 +0100
 
     Enable parallel building for extensions
-    
+
     When building extensions, I noticed a lot of warnings from GNU Make
     saying this:
-    
+
         make[1]: warning: jobserver unavailable: using -j1. Add '+' to parent make rule.
-    
+
     This was causing extensions to be built on a single CPU, instead of
     altogether. By adding the '+' prefix we can make things work in
     parallel, as documented here:
-    
+
         https://flameeyes.blog/2008/11/16/for-a-parallel-world-case-study-n-4-jobserver-unavailable/
-    
+
     Note that this may break the build for anyone who is using non-GNU
     `make`.
 
 diff --git a/externals/Makefile b/externals/Makefile
-index d9d40b22..bdb67504 100644
+index 9ce18865..ae4a407c 100644
 --- a/externals/Makefile
 +++ b/externals/Makefile
-@@ -312,50 +312,50 @@ aka.wiiremote_clean:
+@@ -319,50 +319,50 @@ aka.wiiremote_clean:
  #------------------------------------------------------------------------------#
  # APPLE
  apple:
@@ -85,57 +85,7 @@ index d9d40b22..bdb67504 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -376,40 +376,40 @@ bendinfix_clean:
- #------------------------------------------------------------------------------#
- # BOIDS
- boids:
--	make -C $(externals_src)/boids PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
-+	+$(MAKE) -C $(externals_src)/boids PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
- 
- boids_install:
--	make -C $(externals_src)/boids \
-+	+$(MAKE) -C $(externals_src)/boids \
- 		DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- boids_clean:
--	make -C $(externals_src)/boids clean
-+	+$(MAKE) -C $(externals_src)/boids clean
- 
- 
- #------------------------------------------------------------------------------#
- # BSAYLOR
- bsaylor:
--	make -C $(externals_src)/bsaylor PD_PATH=$(pd_src) CFLAGS="$(CFLAGS) -fno-strict-aliasing"
-+	+$(MAKE) -C $(externals_src)/bsaylor PD_PATH=$(pd_src) CFLAGS="$(CFLAGS) -fno-strict-aliasing"
- 
- bsaylor_install:
--	make -C $(externals_src)/bsaylor \
-+	+$(MAKE) -C $(externals_src)/bsaylor \
- 		DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- bsaylor_clean:
--	make -C $(externals_src)/bsaylor clean
-+	+$(MAKE) -C $(externals_src)/bsaylor clean
- 
- 
- #------------------------------------------------------------------------------#
- # COMPORT
- comport:
--	make -C $(externals_src)/iem/comport/comport PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
-+	+$(MAKE) -C $(externals_src)/iem/comport/comport PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
- 
- comport_install:
--	make -C $(externals_src)/iem/comport/comport \
-+	+$(MAKE) -C $(externals_src)/iem/comport/comport \
- 		DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- comport_clean:
--	make -C $(externals_src)/iem/comport/comport clean
-+	+$(MAKE) -C $(externals_src)/iem/comport/comport clean
- 
- 
- #------------------------------------------------------------------------------#
-@@ -451,13 +451,13 @@ creb_clean:
+@@ -458,13 +458,13 @@ creb_clean:
  #------------------------------------------------------------------------------#
  # CXC
  cxc:
@@ -152,7 +102,7 @@ index d9d40b22..bdb67504 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -466,16 +466,16 @@ cxc_clean:
+@@ -473,16 +473,16 @@ cxc_clean:
  # AG: this external provides no sane way to pass custom CFLAGS, so we abuse
  # WARN_CFLAGS for that purpose.
  cyclone:
@@ -172,8 +122,8 @@ index d9d40b22..bdb67504 100644
  		clean
  
  #------------------------------------------------------------------------------#
-@@ -487,50 +487,50 @@ ifneq ($(OS_NAME),darwin)
- 		./configure --with-python=python2 && make
+@@ -494,50 +494,50 @@ ifneq ($(OS_NAME),darwin)
+ 		./configure --without-python && make
  endif
  endif
 -	make -C $(externals_src)/disis PD_PATH=$(pd_src) pdbinpath=$(pd_src)/src CFLAGS="$(CFLAGS_ADD)"
@@ -234,7 +184,7 @@ index d9d40b22..bdb67504 100644
  
  fftease_install:
  	#make -C $(externals_src)/$(FFTEASE_NAME) DESTDIR="$(DESTDIR)" \
-@@ -552,7 +552,7 @@ fftease_install:
+@@ -559,7 +559,7 @@ fftease_install:
  		$(DESTDIR)$(objectsdir)/$(FFTEASE_NAME)
  
  fftease_clean:
@@ -243,7 +193,7 @@ index d9d40b22..bdb67504 100644
  
  #------------------------------------------------------------------------------#
  # FLATGUI
-@@ -561,16 +561,16 @@ fftease_clean:
+@@ -568,16 +568,16 @@ fftease_clean:
  # external directory for compatibility
  #
  flatgui:
@@ -263,40 +213,7 @@ index d9d40b22..bdb67504 100644
  
  #------------------------------------------------------------------------------#
  # FLEXT and FLEXT externals
-@@ -649,26 +649,26 @@ flib_clean:
- # FLUID~
- 
- fluid:
--	make -C $(externals_src)/fluid~ PD_PATH=$(pd_src) \
-+	+$(MAKE) -C $(externals_src)/fluid~ PD_PATH=$(pd_src) \
- 		pdbinpath=$(pd_src)/src CFLAGS="$(CFLAGS_ADD)"
- 
- fluid_install:
--	make -C $(externals_src)/fluid~ DESTDIR="$(DESTDIR)" \
-+	+$(MAKE) -C $(externals_src)/fluid~ DESTDIR="$(DESTDIR)" \
- 		objectsdir="$(objectsdir)" install
- 
- fluid_clean:
--	make -C $(externals_src)/fluid~ clean
-+	+$(MAKE) -C $(externals_src)/fluid~ clean
- 
- #------------------------------------------------------------------------------#
- # FREEVERB
- freeverb:
--	make -C $(externals_src)/freeverb~ PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
-+	+$(MAKE) -C $(externals_src)/freeverb~ PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
- 
- freeverb_install:
--	make -C $(externals_src)/freeverb~ DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
-+	+$(MAKE) -C $(externals_src)/freeverb~ DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- freeverb_clean:
--	make -C $(externals_src)/freeverb~ clean
-+	+$(MAKE) -C $(externals_src)/freeverb~ clean
- 
- 
- #------------------------------------------------------------------------------
-@@ -692,7 +692,7 @@ $(gem_src)/Gem.dll: $(gem_src)/configure
+@@ -706,7 +706,7 @@ $(gem_src)/Gem.dll: $(gem_src)/configure
  		--prefix=$(prefix) \
  		--libdir=$(objectsdir) \
  		--with-pd=$(DESTDIR)
@@ -305,18 +222,18 @@ index d9d40b22..bdb67504 100644
  
  $(gem_src)/Gem.pd_linux: $(gem_src)/configure
  	test -s $(gem_src)/Gem.pd_linux || \
-@@ -702,7 +702,7 @@ $(gem_src)/Gem.pd_linux: $(gem_src)/configure
- 			--with-video=plugins \
- 			--with-film=plugins \
+@@ -714,7 +714,7 @@ $(gem_src)/Gem.pd_linux: $(gem_src)/configure
+ 			CXXFLAGS="-DHAVE_S_STUFF_H $(CFLAGS_ADD)" \
+ 			--prefix=$(prefix) \
  			--with-pd=$(pd_src)
 -	$(MAKE) $(GEM_MAKEFLAGS) -C $(gem_src)
 +	+$(MAKE) $(GEM_MAKEFLAGS) -C $(gem_src)
  
- $(gem_src)/Gem.pd_darwin: $(gem_src)/configure
- 	cd $(gem_src) && ./configure \
-@@ -716,16 +716,16 @@ $(gem_src)/Gem.pd_darwin: $(gem_src)/configure
- 		--with-video=plugins \
- 		--with-film=plugins \
+ # Mac: This is still a bit experimental. At present, many of the window
+ # backends seem to be at least half-broken on recent macOS versions, including
+@@ -758,16 +758,16 @@ $(gem_src)/Gem.pd_darwin: $(gem_src)/configure
+ 		$(gem_window) \
+ 		--without-ndi --without-DeckLink \
  		--with-pd=$(pd_src)
 -	$(MAKE) $(GEM_MAKEFLAGS) -C $(gem_src)
 +	+$(MAKE) $(GEM_MAKEFLAGS) -C $(gem_src)
@@ -334,7 +251,7 @@ index d9d40b22..bdb67504 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -769,27 +769,27 @@ gem2pdp_clean:
+@@ -811,27 +811,27 @@ gem2pdp_clean:
  #------------------------------------------------------------------------------#
  # GGEE
  ggee:
@@ -368,7 +285,7 @@ index d9d40b22..bdb67504 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1154,13 +1154,13 @@ jasch_lib_clean:
+@@ -1196,13 +1196,13 @@ jasch_lib_clean:
  #------------------------------------------------------------------------------#
  # LOADERS-LIBDIR
  loaders-libdir:
@@ -385,7 +302,7 @@ index d9d40b22..bdb67504 100644
  
  #------------------------------------------------------------------------------#
  # LYON
-@@ -1170,7 +1170,7 @@ LYON_SRC=lyonpotpourri
+@@ -1212,7 +1212,7 @@ LYON_SRC=lyonpotpourri
  LYON_DEST=lyonpotpourri
  
  lyonpotpourri:
@@ -394,7 +311,7 @@ index d9d40b22..bdb67504 100644
  
  lyonpotpourri_install:
  	#make -C $(externals_src)/$(LYON_SRC) DESTDIR="$(DESTDIR)" \
-@@ -1206,52 +1206,52 @@ endif
+@@ -1248,52 +1248,52 @@ endif
  		$(DESTDIR)$(objectsdir)/$(LYON_DEST)
  
  lyonpotpourri_clean:
@@ -460,7 +377,7 @@ index d9d40b22..bdb67504 100644
  
  
  
-@@ -1315,26 +1315,26 @@ moocow_clean:
+@@ -1357,26 +1357,26 @@ moocow_clean:
  #------------------------------------------------------------------------------#
  # MOONLIB
  moonlib:
@@ -493,7 +410,7 @@ index d9d40b22..bdb67504 100644
  
  
  
-@@ -1418,25 +1418,25 @@ oscx_clean:
+@@ -1460,25 +1460,25 @@ oscx_clean:
  #------------------------------------------------------------------------------#
  # PAN
  pan:
@@ -525,39 +442,7 @@ index d9d40b22..bdb67504 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1446,25 +1446,25 @@ LUA_CFLAGS = $(shell (pkg-config --cflags lua5.4 || pkg-config --cflags lua5.3 |
- LUA_LIBS = $(shell (pkg-config --libs lua5.4 || pkg-config --libs lua5.3 || pkg-config --libs lua5.2 || pkg-config --libs lua) 2> /dev/null)
- 
- pdlua:
--	make -C $(externals_src)/pd-lua LUA_CFLAGS="$(LUA_CFLAGS)" LUA_LIBS="$(LUA_LIBS)" PD_PATH="$(pd_src)" PD_LIB="$(pd_src)/src" CFLAGS="$(CFLAGS)"
-+	+$(MAKE) -C $(externals_src)/pd-lua LUA_CFLAGS="$(LUA_CFLAGS)" LUA_LIBS="$(LUA_LIBS)" PD_PATH="$(pd_src)" PD_LIB="$(pd_src)/src" CFLAGS="$(CFLAGS)"
- 
- pdlua_install:
--	make -C $(externals_src)/pd-lua DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
-+	+$(MAKE) -C $(externals_src)/pd-lua DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- pdlua_clean:
--	make -C $(externals_src)/pd-lua clean
-+	+$(MAKE) -C $(externals_src)/pd-lua clean
- 
- 
- #------------------------------------------------------------------------------#
- # PDOGG
- pdogg:
--	make -C $(externals_src)/pdogg PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
-+	+$(MAKE) -C $(externals_src)/pdogg PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
- 
- pdogg_install:
--	make -C $(externals_src)/pdogg DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
-+	+$(MAKE) -C $(externals_src)/pdogg DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- pdogg_clean:
--	make -C $(externals_src)/pdogg clean
-+	+$(MAKE) -C $(externals_src)/pdogg clean
- 
- 
- 
-@@ -1524,7 +1524,7 @@ pdp_clean:
+@@ -1563,7 +1563,7 @@ pdp_clean:
  PDP_OPENGL_NAME=3dp
  PDP_OPENGL_BINARY := $(externals_src)/pdp/opengl/pdp_opengl.$(EXTENSION)
  $(PDP_OPENGL_BINARY): $(externals_src)/pdp/Makefile.config
@@ -566,7 +451,7 @@ index d9d40b22..bdb67504 100644
  
  pdp_opengl: $(PDP_OPENGL_BINARY)
  	echo $(PDP_OPENGL_BINARY)
-@@ -1558,7 +1558,7 @@ ifeq ($(OS_NAME),darwin)
+@@ -1597,7 +1597,7 @@ ifeq ($(OS_NAME),darwin)
  endif
  
  pdp_opengl_clean:
@@ -575,7 +460,7 @@ index d9d40b22..bdb67504 100644
  	-rm -f -- $(PDP_OPENGL_BINARY)
  	-rm -f -- $(externals_src)/pdp_opengl/*.bak
  	-rm -f -- $(externals_src)/pdp_opengl/*.*~
-@@ -1618,25 +1618,25 @@ pidip_clean:
+@@ -1657,25 +1657,25 @@ pidip_clean:
  #------------------------------------------------------------------------------#
  # PLUGIN
  plugin:
@@ -607,7 +492,7 @@ index d9d40b22..bdb67504 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1683,7 +1683,7 @@ rjlib_clean:
+@@ -1722,7 +1722,7 @@ rjlib_clean:
  rtcmix:
  	cd $(externals_src)/rtcmix-in-pd/RTcmix-pd-4.0.1.6 \
  		&& ./configure && make
@@ -616,7 +501,7 @@ index d9d40b22..bdb67504 100644
  		PD_PATH=$(pd_src) \
  		CFLAGS="$(CFLAGS)" \
  		LINUXINCLUDE=-I$(pd_src)/src
-@@ -1700,32 +1700,32 @@ rtcmix_install:
+@@ -1739,32 +1739,32 @@ rtcmix_install:
  		$(DESTDIR)/$(objectsdir)/rtcmix
  
  rtcmix_clean:
@@ -657,7 +542,7 @@ index d9d40b22..bdb67504 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1748,7 +1748,7 @@ tclpd_install: tclpd
+@@ -1787,7 +1787,7 @@ tclpd_install: tclpd
  #		$(DESTDIR)$(examplesdir)/$(TCLPD_NAME)
  
  tclpd_clean:
@@ -666,7 +551,7 @@ index d9d40b22..bdb67504 100644
  	-rm -f -- $(TCLPD_LIB)
  	-rm -f -- $(externals_src)/tclpd/*.bak
  	-rm -f -- $(externals_src)/tclpd/*.*~
-@@ -1757,14 +1757,14 @@ tclpd_clean:
+@@ -1796,14 +1796,14 @@ tclpd_clean:
  #------------------------------------------------------------------------------#
  # TKWIDGETS
  tkwidgets:
@@ -684,71 +569,7 @@ index d9d40b22..bdb67504 100644
  
  #------------------------------------------------------------------------------#
  # TOF
-@@ -1823,51 +1823,51 @@ toxy_clean:
- #------------------------------------------------------------------------------#
- # UNAUTHORIZED
- unauthorized:
--	make -C $(externals_src)/unauthorized CFLAGS="$(CFLAGS)" \
-+	+$(MAKE) -C $(externals_src)/unauthorized CFLAGS="$(CFLAGS)" \
- 		PD_PATH=$(pd_src) PD_INCLUDE=$(pd_src)/src
- 
- unauthorized_install:
--	make -C $(externals_src)/unauthorized \
-+	+$(MAKE) -C $(externals_src)/unauthorized \
- 		DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- unauthorized_clean:
--	make -C $(externals_src)/unauthorized clean
-+	+$(MAKE) -C $(externals_src)/unauthorized clean
- 
- 
- #------------------------------------------------------------------------------#
- # VBAP
- vbap:
--	make -C $(externals_src)/vbap PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
-+	+$(MAKE) -C $(externals_src)/vbap PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
- 
- vbap_install:
--	make -C $(externals_src)/vbap DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
-+	+$(MAKE) -C $(externals_src)/vbap DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- vbap_clean:
--	make -C $(externals_src)/vbap clean
-+	+$(MAKE) -C $(externals_src)/vbap clean
- 
- 
- #------------------------------------------------------------------------------#
- # VANILLA
- vanilla:
--	make -C $(externals_src)/vanilla PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
-+	+$(MAKE) -C $(externals_src)/vanilla PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
- 
- vanilla_install:
--	make -C $(externals_src)/vanilla DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
-+	+$(MAKE) -C $(externals_src)/vanilla DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- vanilla_clean:
--	make -C $(externals_src)/vanilla clean
-+	+$(MAKE) -C $(externals_src)/vanilla clean
- 
- 
- #------------------------------------------------------------------------------#
- # WINDOWING
- windowing:
--	make -C $(externals_src)/windowing PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
-+	+$(MAKE) -C $(externals_src)/windowing PD_PATH=$(pd_src) CFLAGS="$(CFLAGS)"
- 
- windowing_install:
--	make -C $(externals_src)/windowing DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
-+	+$(MAKE) -C $(externals_src)/windowing DESTDIR="$(DESTDIR)" objectsdir="$(objectsdir)" install
- 
- windowing_clean:
--	make -C $(externals_src)/windowing clean
-+	+$(MAKE) -C $(externals_src)/windowing clean
- 
- 
- 
-@@ -2350,13 +2350,13 @@ iemxmlrpc_clean:
+@@ -2334,13 +2334,13 @@ iemxmlrpc_clean:
  #------------------------------------------------------------------------------#
  # EARPLUG
  earplug:
@@ -765,7 +586,7 @@ index d9d40b22..bdb67504 100644
  
  
  
-@@ -2376,7 +2376,7 @@ etags:
+@@ -2360,7 +2360,7 @@ etags:
  	etags --append --language=none --regex="/proc[ \t]+\([^ \t]+\)/\1/" \
  		$(externals_src)/unauthorized/*/*.tk
  	find /usr/include -type f -name \*.h -exec etags -a '{}' \;

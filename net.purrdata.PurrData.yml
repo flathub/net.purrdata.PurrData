@@ -1,6 +1,6 @@
 id: net.purrdata.PurrData
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 default-branch: stable
 command: pd-wrapper.sh
@@ -23,7 +23,7 @@ finish-args:
 add-extensions:
   org.freedesktop.LinuxAudio.Plugins:
     directory: extensions/Plugins
-    version: '21.08'
+    version: '22.08'
     add-ld-path: lib
     merge-dirs: ladspa
     subdirectories: true
@@ -31,8 +31,6 @@ add-extensions:
 
 modules:
   - shared-modules/lua5.3/lua-5.3.5.json
-# We expect to run against pipewire-jack, but we build with regular JACK libraries.
-  - shared-modules/linux-audio/jack2.json
 # (optional) For fluidsynth
   - shared-modules/linux-audio/ladspa.json
   - fluidsynth.json

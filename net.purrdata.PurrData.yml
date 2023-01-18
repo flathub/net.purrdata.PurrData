@@ -6,20 +6,20 @@ default-branch: stable
 command: pd-wrapper.sh
 finish-args:
 # Display
-- --share=ipc
-- --socket=x11
-- --socket=wayland
-- --device=dri
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --device=dri
 # Audio
-- --socket=pulseaudio
-- --system-talk-name=org.freedesktop.RealtimeKit1
-- --filesystem=xdg-run/pipewire-0
+  - --socket=pulseaudio
+  - --system-talk-name=org.freedesktop.RealtimeKit1
+  - --filesystem=xdg-run/pipewire-0
 # Filesystem access (pd doesn't yet work with portals)
-- --filesystem=host
+  - --filesystem=host
 # MIDI access (Flatpak doesn't yet support exposing only MIDI devices)
-- --device=all
+  - --device=all
 # Linux Audio plugins
-- --env=LADSPA_PATH=/app/extensions/Plugins/ladspa:/app/lib/ladspa
+  - --env=LADSPA_PATH=/app/extensions/Plugins/ladspa:/app/lib/ladspa
 add-extensions:
   org.freedesktop.LinuxAudio.Plugins:
     directory: extensions/Plugins
@@ -30,58 +30,58 @@ add-extensions:
     no-autodownload: true
 
 modules:
-- shared-modules/lua5.3/lua-5.3.5.json
+  - shared-modules/lua5.3/lua-5.3.5.json
 # We expect to run against pipewire-jack, but we build with regular JACK libraries.
-- shared-modules/linux-audio/jack2.json
+  - shared-modules/linux-audio/jack2.json
 # (optional) For fluidsynth
-- shared-modules/linux-audio/ladspa.json
-- fluidsynth.json
-- name: purr-data
-  buildsystem: autotools
-  subdir: pd/src
-  config-opts: [--disable-portaudio, --enable-alsa, --disable-oss, --enable-jack]
-  sources:
-  - type: git
-    url: https://github.com/agraef/purr-data/
-    tag: 2.17.0
-    commit: 1cc4aab71e1b5006ac45629b6d2b1ec250a92f03
-    x-checker-data:
+  - shared-modules/linux-audio/ladspa.json
+  - fluidsynth.json
+  - name: purr-data
+    buildsystem: autotools
+    subdir: pd/src
+    config-opts: [--disable-portaudio, --enable-alsa, --disable-oss, --enable-jack]
+    sources:
+      - type: git
+        url: https://github.com/agraef/purr-data/
+        tag: 2.19.0
+        commit: 664c3a9ba945ef80fbee0b575772197c319ee1d2
+        x-checker-data:
       # Auto updates using https://github.com/flathub/flatpak-external-data-checker
-      type: git
-      tag-pattern: "^([\\d.]+)$"
-      is-main-source: true
-  - type: patch
-    path: patch/gnu-make-parallel.patch
-  - type: patch
-    path: patch/no-rsync-during-install.patch
+          type: git
+          tag-pattern: ^([\d.]+)$
+          is-main-source: true
+      - type: patch
+        path: patch/gnu-make-parallel.patch
+      - type: patch
+        path: patch/no-rsync-during-install.patch
 
-- name: pd-externals
-  buildsystem: simple
-  subdir: externals
-  build-commands:
-  - |
-    make -j ${FLATPAK_BUILDER_N_JOBS} LUA_LIBS="-L/app/lib -llua" prefix=/app \
-         adaptive arraysize autotune bassemu boids comport creb cxc cyclone earplug ekext ext13 fftease \
-         flatgui freeverb ggee hcs iem_ambi iem_bin_ambi iemlib iemguts iem_adaptfilt iemmatrix \
-         iemxmlrpc iem_delay iem_roomsim iem_spec2 iem_tab jasch_lib loaders-libdir lyonpotpourri mapping \
-         markex maxlib mjlib moonlib motex mrpeach pan pdcontainer pddp pdlua pdogg plugin pmpd \
-         rjlib sigpack smlib tof unauthorized vbap windowing
-  - make -j ${FLATPAK_BUILDER_N_JOBS} LDFLAGS=-L/app/lib prefix=/app fluid
-  - |
-    make -j ${FLATPAK_BUILDER_N_JOBS} DESTDIR=/ LUA_LIBS="-L/app/lib -llua" prefix=/app \
-         adaptive_install arraysize_install autotune_install bassemu_install \
-         boids_install comport_install creb_install cxc_install cyclone_install \
-         earplug_install ekext_install ext13_install fftease_install \
-         flatgui_install fluid_install freeverb_install ggee_install hcs_install \
-         iem_ambi_install iem_bin_ambi_install iemlib_install \
-         iemguts_install iem_adaptfilt_install iemmatrix_install iemxmlrpc_install \
-         iem_delay_install iem_roomsim_install iem_spec2_install iem_tab_install \
-         jasch_lib_install loaders-libdir_install lyonpotpourri_install \
-         mapping_install markex_install maxlib_install mjlib_install \
-         moonlib_install motex_install mrpeach_install \
-         pan_install pdcontainer_install pddp_install pdlua_install pdogg_install \
-         plugin_install pmpd_install rjlib_install sigpack_install smlib_install \
-         tof_install unauthorized_install vbap_install windowing_install
+  - name: pd-externals
+    buildsystem: simple
+    subdir: externals
+    build-commands:
+      - |
+        make -j ${FLATPAK_BUILDER_N_JOBS} LUA_LIBS="-L/app/lib -llua" prefix=/app \
+             adaptive arraysize autotune bassemu boids comport creb cxc cyclone earplug ekext ext13 fftease \
+             flatgui freeverb ggee hcs iem_ambi iem_bin_ambi iemlib iemguts iem_adaptfilt iemmatrix \
+             iemxmlrpc iem_delay iem_roomsim iem_spec2 iem_tab jasch_lib loaders-libdir lyonpotpourri mapping \
+             markex maxlib mjlib moonlib motex mrpeach pan pdcontainer pddp pdlua pdogg plugin pmpd \
+             rjlib sigpack smlib tof unauthorized vbap windowing
+      - make -j ${FLATPAK_BUILDER_N_JOBS} LDFLAGS=-L/app/lib prefix=/app fluid
+      - |
+        make -j ${FLATPAK_BUILDER_N_JOBS} DESTDIR=/ LUA_LIBS="-L/app/lib -llua" prefix=/app \
+             adaptive_install arraysize_install autotune_install bassemu_install \
+             boids_install comport_install creb_install cxc_install cyclone_install \
+             earplug_install ekext_install ext13_install fftease_install \
+             flatgui_install fluid_install freeverb_install ggee_install hcs_install \
+             iem_ambi_install iem_bin_ambi_install iemlib_install \
+             iemguts_install iem_adaptfilt_install iemmatrix_install iemxmlrpc_install \
+             iem_delay_install iem_roomsim_install iem_spec2_install iem_tab_install \
+             jasch_lib_install loaders-libdir_install lyonpotpourri_install \
+             mapping_install markex_install maxlib_install mjlib_install \
+             moonlib_install motex_install mrpeach_install \
+             pan_install pdcontainer_install pddp_install pdlua_install pdogg_install \
+             plugin_install pmpd_install rjlib_install sigpack_install smlib_install \
+             tof_install unauthorized_install vbap_install windowing_install
   # The following externals from the purr-data repo are not built:
   #
   #   bsaylor  -- needs fftw
@@ -90,82 +90,82 @@ modules:
   #   moocow -- fails to configure
   #   oscx -- fails to configure
   #   zexy -- fails to configure
-  sources:
-  - type: git
-    url: https://github.com/agraef/purr-data/
-    tag: 2.17.0
-    commit: 1cc4aab71e1b5006ac45629b6d2b1ec250a92f03
-    x-checker-data:
-      type: git
-      tag-pattern: "^([\\d.]+)$"
+    sources:
+      - type: git
+        url: https://github.com/agraef/purr-data/
+        tag: 2.19.0
+        commit: 664c3a9ba945ef80fbee0b575772197c319ee1d2
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d.]+)$
 
-- name: pd-abstractions
-  buildsystem: simple
-  subdir: abstractions
-  build-commands:
-  - make -j ${FLATPAK_BUILDER_N_JOBS} DESTDIR=/ prefix=/app install
-  sources:
-  - type: git
-    url: https://github.com/agraef/purr-data/
-    tag: 2.17.0
-    commit: 1cc4aab71e1b5006ac45629b6d2b1ec250a92f03
-    x-checker-data:
-      type: git
-      tag-pattern: "^([\\d.]+)$"
+  - name: pd-abstractions
+    buildsystem: simple
+    subdir: abstractions
+    build-commands:
+      - make -j ${FLATPAK_BUILDER_N_JOBS} DESTDIR=/ prefix=/app install
+    sources:
+      - type: git
+        url: https://github.com/agraef/purr-data/
+        tag: 2.19.0
+        commit: 664c3a9ba945ef80fbee0b575772197c319ee1d2
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d.]+)$
 
-- name: purr-data-integration
-  buildsystem: simple
-  build-commands:
+  - name: purr-data-integration
+    buildsystem: simple
+    build-commands:
   # These commands run in the 'subdir' that we set, but the sources appear at
   # the top level hence the `../..` everywhere.
-  - mkdir -p /app/lib/pd-l2ork/bin/nw
-  - tar -x -f nwjs.tar.gz -C /app/lib/pd-l2ork/bin/nw --strip-components=1
+      - mkdir -p /app/lib/pd-l2ork/bin/nw
+      - tar -x -f nwjs.tar.gz -C /app/lib/pd-l2ork/bin/nw --strip-components=1
   # wrapper script
-  - install -m 755 packages/linux_flatpak/pd-wrapper.sh /app/bin
+      - install -m 755 packages/linux_flatpak/pd-wrapper.sh /app/bin
   # .desktop file (so we appear in list of applications)
-  - install -d /app/share/applications/
-  - install -m 644 packages/linux_flatpak/net.purrdata.PurrData.desktop /app/share/applications/
+      - install -d /app/share/applications/
+      - install -m 644 packages/linux_flatpak/net.purrdata.PurrData.desktop /app/share/applications/
   # AppStream metadata (for app store / package manager)
-  - install -d /app/share/metainfo/
-  - install -m 644 net.purrdata.PurrData.metainfo.xml /app/share/metainfo
+      - install -d /app/share/metainfo/
+      - install -m 644 net.purrdata.PurrData.metainfo.xml /app/share/metainfo
   # icon (for everyone)
-  - install -d /app/share/icons/hicolor/scalable/apps
-  - install -m 644 packages/linux_flatpak/net.purrdata.PurrData.svg /app/share/icons/hicolor/scalable/apps/
+      - install -d /app/share/icons/hicolor/scalable/apps
+      - install -m 644 packages/linux_flatpak/net.purrdata.PurrData.svg /app/share/icons/hicolor/scalable/apps/
   # add mime type to .pd files
-  - install -d /app/share/mime/packages/
-  - install -m 644 packages/linux_make/pd-l2ork.xml /app/share/mime/packages/net.purrdata.PurrData.xml
+      - install -d /app/share/mime/packages/
+      - install -m 644 packages/linux_make/pd-l2ork.xml /app/share/mime/packages/net.purrdata.PurrData.xml
   # Default settings (mostly needed to set up the PD library search paths).
-  - install -m 644 default.settings /app/lib/pd-l2ork
+      - install -m 644 default.settings /app/lib/pd-l2ork
   # Audio Plugins
-  - install -d /app/extensions/Plugins
-  sources:
-  - type: git
-    url: https://github.com/agraef/purr-data/
-    tag: 2.17.0
-    commit: 1cc4aab71e1b5006ac45629b6d2b1ec250a92f03
-    x-checker-data:
-      type: git
-      tag-pattern: "^([\\d.]+)$"
-  - type: file
+      - install -d /app/extensions/Plugins
+    sources:
+      - type: git
+        url: https://github.com/agraef/purr-data/
+        tag: 2.19.0
+        commit: 664c3a9ba945ef80fbee0b575772197c319ee1d2
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d.]+)$
+      - type: file
     # Using an binary x86_64 build of nw.js makes me sad. There are ARM packages
     # available from the nw.js website. For other platforms, it's difficult but
     # possible to build nw.js and Chromium from source, good luck!
-    url: https://dl.nwjs.io/v0.42.3/nwjs-v0.42.3-linux-x64.tar.gz
-    sha256: 4802a3a32767ff8908aef8e91e11d81e7b515b32a09c9ab82c09edf91e49d99e
-    dest-filename: nwjs.tar.gz
+        url: https://dl.nwjs.io/v0.42.3/nwjs-v0.42.3-linux-x64.tar.gz
+        sha256: 4802a3a32767ff8908aef8e91e11d81e7b515b32a09c9ab82c09edf91e49d99e
+        dest-filename: nwjs.tar.gz
     # FIXME: there is an upstream version of this file but the maintainers don't update
     # the <releases> section. We need to autogenerate this section somehow, see
     # https://blog.tenstral.net/2020/03/maintain-release-info-easily-in-metainfo-files.html
-  - type: file
-    path: net.purrdata.PurrData.metainfo.xml
-  - type: file
-    path: default.settings
-  - type: patch
-    path: patch/flatpak-alsa-pulse.patch
+      - type: file
+        path: net.purrdata.PurrData.metainfo.xml
+      - type: file
+        path: default.settings
+      - type: patch
+        path: patch/flatpak-alsa-pulse.patch
 
 cleanup:
-- /include/*
-- /lib/pd-l2ork/Makefile.am
-- /lib/pd-l2ork/README.txt
-- /lib/pd-l2ork/bin/todo.txt
-- /lib/pd-l2ork/bin/nw/credits.html
+  - /include/*
+  - /lib/pd-l2ork/Makefile.am
+  - /lib/pd-l2ork/README.txt
+  - /lib/pd-l2ork/bin/todo.txt
+  - /lib/pd-l2ork/bin/nw/credits.html

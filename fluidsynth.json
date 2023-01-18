@@ -11,6 +11,10 @@
             "type": "archive",
             "url": "https://github.com/FluidSynth/fluidsynth/archive/v1.1.11.tar.gz",
             "sha256": "da8878ff374d12392eecf87e96bad8711b8e76a154c25a571dd8614d1af80de8"
+        },
+        {
+            "type": "patch",
+            "path": "patch/fluid-glib.patch"
         }
     ]
 }

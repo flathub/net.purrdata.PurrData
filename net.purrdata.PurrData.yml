@@ -29,6 +29,13 @@ add-extensions:
     subdirectories: true
     no-autodownload: true
 
+cleanup:
+  - /include/*
+  - /lib/pd-l2ork/Makefile.am
+  - /lib/pd-l2ork/README.txt
+  - /lib/pd-l2ork/bin/todo.txt
+  - /lib/pd-l2ork/bin/nw/credits.html
+
 modules:
   - shared-modules/lua5.3/lua-5.3.5.json
 # (optional) For fluidsynth
@@ -44,9 +51,10 @@ modules:
         tag: 2.18.1
         commit: e1770339836b730bb213a48af685914ac921e27f
         x-checker-data:
-      # Auto updates using https://github.com/flathub/flatpak-external-data-checker
-          type: git
-          tag-pattern: ^([\d.]+)$
+          type: json
+          url: https://api.github.com/repos/agraef/purr-data/releases/latest
+          tag-query: .tag_name
+          version-query: $tag
           is-main-source: true
       - type: patch
         path: patch/gnu-make-parallel.patch
@@ -94,8 +102,10 @@ modules:
         tag: 2.18.1
         commit: e1770339836b730bb213a48af685914ac921e27f
         x-checker-data:
-          type: git
-          tag-pattern: ^([\d.]+)$
+          type: json
+          url: https://api.github.com/repos/agraef/purr-data/releases/latest
+          tag-query: .tag_name
+          version-query: $tag
 
   - name: pd-abstractions
     buildsystem: simple
@@ -108,8 +118,10 @@ modules:
         tag: 2.18.1
         commit: e1770339836b730bb213a48af685914ac921e27f
         x-checker-data:
-          type: git
-          tag-pattern: ^([\d.]+)$
+          type: json
+          url: https://api.github.com/repos/agraef/purr-data/releases/latest
+          tag-query: .tag_name
+          version-query: $tag
 
   - name: purr-data-integration
     buildsystem: simple
@@ -142,8 +154,10 @@ modules:
         tag: 2.18.1
         commit: e1770339836b730bb213a48af685914ac921e27f
         x-checker-data:
-          type: git
-          tag-pattern: ^([\d.]+)$
+          type: json
+          url: https://api.github.com/repos/agraef/purr-data/releases/latest
+          tag-query: .tag_name
+          version-query: $tag
       - type: file
     # Using an binary x86_64 build of nw.js makes me sad. There are ARM packages
     # available from the nw.js website. For other platforms, it's difficult but
@@ -160,10 +174,3 @@ modules:
         path: default.settings
       - type: patch
         path: patch/flatpak-alsa-pulse.patch
-
-cleanup:
-  - /include/*
-  - /lib/pd-l2ork/Makefile.am
-  - /lib/pd-l2ork/README.txt
-  - /lib/pd-l2ork/bin/todo.txt
-  - /lib/pd-l2ork/bin/nw/credits.html

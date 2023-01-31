@@ -142,8 +142,7 @@ modules:
       - install -d /app/share/icons/hicolor/scalable/apps
       - install -m 644 packages/linux_flatpak/net.purrdata.PurrData.svg /app/share/icons/hicolor/scalable/apps/
   # add mime type to .pd files
-      - install -d /app/share/mime/packages/
-      - install -m 644 packages/linux_make/pd-l2ork.xml /app/share/mime/packages/net.purrdata.PurrData.xml
+      - install -Dm644 packages/linux_make/purr-data.xml ${FLATPAK_DEST}/share/mime/packages/${FLATPAK_ID}.xml
   # Default settings (mostly needed to set up the PD library search paths).
       - install -m 644 default.settings /app/lib/pd-l2ork
   # Audio Plugins

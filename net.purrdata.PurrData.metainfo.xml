@@ -43,6 +43,7 @@
   <url type="bugtracker">https://git.purrdata.net/jwilkes/purr-data/issues</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.19.2" date="2023-02-06"/>
     <release version="2.19.1" date="2023-01-30"/>
     <release version="2.19.0" date="2023-01-30"/>
     <release version="2.18.1" date="2023-01-17"/>

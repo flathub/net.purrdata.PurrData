@@ -1,36 +1,32 @@
 id: net.purrdata.PurrData
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
-default-branch: stable
 command: pd-wrapper.sh
 finish-args:
 # Display
   - --share=ipc
   - --socket=x11
-  - --socket=wayland
   - --device=dri
 # Audio
   - --socket=pulseaudio
-  - --system-talk-name=org.freedesktop.RealtimeKit1
   - --filesystem=xdg-run/pipewire-0
 # Filesystem access (pd doesn't yet work with portals)
   - --filesystem=host
-# MIDI access (Flatpak doesn't yet support exposing only MIDI devices)
-  - --device=all
 # Linux Audio plugins
   - --env=LADSPA_PATH=/app/extensions/Plugins/ladspa:/app/lib/ladspa
 add-extensions:
   org.freedesktop.LinuxAudio.Plugins:
     directory: extensions/Plugins
-    version: '22.08'
+    version: '23.08'
     add-ld-path: lib
     merge-dirs: ladspa
     subdirectories: true
     no-autodownload: true
 
 cleanup:
-  - /include/*
+  - /include
+  - /lib/pkgconfig
   - /lib/pd-l2ork/Makefile.am
   - /lib/pd-l2ork/README.txt
   - /lib/pd-l2ork/bin/todo.txt

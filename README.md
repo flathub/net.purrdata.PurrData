@@ -5,6 +5,13 @@ This is a Flatpak for [Purr Data](https://www.purrdata.net/).
 Purr Data is a popular fork of [Pure Data](http://puredata.info/), an open
 source visual programming language for multimedia.
 
+## Permissions
+
+- `x11`: it doesn't support wayland at all. nwjs complains.
+- filesystem `host`: `home` might be sufficient but tightening break things for users.
+- filesystem `xdg-run/pipewire-0`: this is for pipewire (JACK support)
+- socket `pulseaudio`: sound including ALSA and MIDI devices.
+
 ## How to build
 
 This Flatpak uses the standard

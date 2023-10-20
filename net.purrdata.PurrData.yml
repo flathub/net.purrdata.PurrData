@@ -11,6 +11,7 @@ finish-args:
 # Audio
   - --socket=pulseaudio
   - --filesystem=xdg-run/pipewire-0
+  - --system-talk-name=org.freedesktop.UPower
 # Filesystem access (pd doesn't yet work with portals)
   - --filesystem=host
 # Linux Audio plugins

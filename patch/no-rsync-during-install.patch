@@ -1,11 +1,11 @@
-commit 805b073ae0952134b3226d0ad3e5710bb429b438
+commit 9040a977362169e0565b90d20ecba1a1bb45aac6
 Author: Sam Thursfield <sam@afuera.me.uk>
-Date:   Wed Nov 13 11:21:24 2019 +0100
+Date:   Sat Oct 19 20:48:04 2024 -0400
 
     Makefile: Don't use `rsync`
 
 diff --git a/pd/src/makefile.in b/pd/src/makefile.in
-index 4f30df23..e220c98c 100644
+index 6d7c3e1b..90aa9bb2 100644
 --- a/pd/src/makefile.in
 +++ b/pd/src/makefile.in
 @@ -180,7 +180,6 @@ install: all
@@ -24,7 +24,7 @@ index 4f30df23..e220c98c 100644
 +	install -d $(DESTDIR)$(pddocdir)
 +	cp -a ../doc/* $(DESTDIR)$(pddocdir)/
  	mv $(ABOUT_FILE) $(ABOUT_FILE).tmp
- 	cat $(ABOUT_FILE).tmp | sed 's|PD_VERSION|Pd-l2ork version $(PD_L2ORK_VERSION) ($(PD_BUILD_VERSION))|' \
+ 	cat $(ABOUT_FILE).tmp | sed 's|PD_VERSION|Purr-Data version $(PD_L2ORK_VERSION) ($(PD_BUILD_VERSION))|' \
  		> $(ABOUT_FILE)
  	rm $(ABOUT_FILE).tmp
 -	rsync -ax --exclude=.git --exclude=.svn ../extra $(DESTDIR)$(libpddir)/

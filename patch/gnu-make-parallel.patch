@@ -1,28 +1,28 @@
-commit da0a5981514c1b47e631c8070cb12e67b87f2820
+commit 5eee87a9c735182e541d52df857557ff44f5fd8f
 Author: Sam Thursfield <sam@afuera.me.uk>
-Date:   Wed Dec 4 23:39:45 2019 +0100
+Date:   Sat Oct 19 20:39:29 2024 -0400
 
     Enable parallel building for extensions
-
+    
     When building extensions, I noticed a lot of warnings from GNU Make
     saying this:
-
+    
         make[1]: warning: jobserver unavailable: using -j1. Add '+' to parent make rule.
-
+    
     This was causing extensions to be built on a single CPU, instead of
     altogether. By adding the '+' prefix we can make things work in
     parallel, as documented here:
-
+    
         https://flameeyes.blog/2008/11/16/for-a-parallel-world-case-study-n-4-jobserver-unavailable/
-
+    
     Note that this may break the build for anyone who is using non-GNU
     `make`.
 
 diff --git a/externals/Makefile b/externals/Makefile
-index 9ce18865..ae4a407c 100644
+index 968b2d5f..b7438577 100644
 --- a/externals/Makefile
 +++ b/externals/Makefile
-@@ -319,50 +319,50 @@ aka.wiiremote_clean:
+@@ -319,51 +319,51 @@ aka.wiiremote_clean:
  #------------------------------------------------------------------------------#
  # APPLE
  apple:
@@ -47,6 +47,7 @@ index 9ce18865..ae4a407c 100644
 -	make -C $(externals_src)/autotune DESTDIR="$(DESTDIR)" \
 +	+$(MAKE) -C $(externals_src)/autotune DESTDIR="$(DESTDIR)" \
  		objectsdir="$(objectsdir)" install
+ 	install -d $(DESTDIR)$(objectsdir)/images
  	install -p $(externals_src)/autotune/autotune_scale_warp.png \
  		$(DESTDIR)/$(objectsdir)/images
  
@@ -85,7 +86,7 @@ index 9ce18865..ae4a407c 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -458,13 +458,13 @@ creb_clean:
+@@ -459,13 +459,13 @@ creb_clean:
  #------------------------------------------------------------------------------#
  # CXC
  cxc:
@@ -102,7 +103,7 @@ index 9ce18865..ae4a407c 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -473,16 +473,16 @@ cxc_clean:
+@@ -474,65 +474,65 @@ cxc_clean:
  # AG: this external provides no sane way to pass custom CFLAGS, so we abuse
  # WARN_CFLAGS for that purpose.
  cyclone:
@@ -122,10 +123,8 @@ index 9ce18865..ae4a407c 100644
  		clean
  
  #------------------------------------------------------------------------------#
-@@ -494,50 +494,50 @@ ifneq ($(OS_NAME),darwin)
- 		./configure --without-python && make
- endif
- endif
+ # DISIS
+ disis:
 -	make -C $(externals_src)/disis PD_PATH=$(pd_src) pdbinpath=$(pd_src)/src CFLAGS="$(CFLAGS_ADD)"
 +	+$(MAKE) -C $(externals_src)/disis PD_PATH=$(pd_src) pdbinpath=$(pd_src)/src CFLAGS="$(CFLAGS_ADD)"
  
@@ -184,7 +183,7 @@ index 9ce18865..ae4a407c 100644
  
  fftease_install:
  	#make -C $(externals_src)/$(FFTEASE_NAME) DESTDIR="$(DESTDIR)" \
-@@ -559,7 +559,7 @@ fftease_install:
+@@ -554,7 +554,7 @@ fftease_install:
  		$(DESTDIR)$(objectsdir)/$(FFTEASE_NAME)
  
  fftease_clean:
@@ -193,7 +192,7 @@ index 9ce18865..ae4a407c 100644
  
  #------------------------------------------------------------------------------#
  # FLATGUI
-@@ -568,16 +568,16 @@ fftease_clean:
+@@ -563,16 +563,16 @@ fftease_clean:
  # external directory for compatibility
  #
  flatgui:
@@ -213,7 +212,7 @@ index 9ce18865..ae4a407c 100644
  
  #------------------------------------------------------------------------------#
  # FLEXT and FLEXT externals
-@@ -706,7 +706,7 @@ $(gem_src)/Gem.dll: $(gem_src)/configure
+@@ -701,7 +701,7 @@ $(gem_src)/Gem.dll: $(gem_src)/configure
  		--prefix=$(prefix) \
  		--libdir=$(objectsdir) \
  		--with-pd=$(DESTDIR)
@@ -222,7 +221,7 @@ index 9ce18865..ae4a407c 100644
  
  $(gem_src)/Gem.pd_linux: $(gem_src)/configure
  	test -s $(gem_src)/Gem.pd_linux || \
-@@ -714,7 +714,7 @@ $(gem_src)/Gem.pd_linux: $(gem_src)/configure
+@@ -709,7 +709,7 @@ $(gem_src)/Gem.pd_linux: $(gem_src)/configure
  			CXXFLAGS="-DHAVE_S_STUFF_H $(CFLAGS_ADD)" \
  			--prefix=$(prefix) \
  			--with-pd=$(pd_src)
@@ -442,7 +441,7 @@ index 9ce18865..ae4a407c 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1563,7 +1563,7 @@ pdp_clean:
+@@ -1576,7 +1576,7 @@ pdp_clean:
  PDP_OPENGL_NAME=3dp
  PDP_OPENGL_BINARY := $(externals_src)/pdp/opengl/pdp_opengl.$(EXTENSION)
  $(PDP_OPENGL_BINARY): $(externals_src)/pdp/Makefile.config
@@ -451,7 +450,7 @@ index 9ce18865..ae4a407c 100644
  
  pdp_opengl: $(PDP_OPENGL_BINARY)
  	echo $(PDP_OPENGL_BINARY)
-@@ -1597,7 +1597,7 @@ ifeq ($(OS_NAME),darwin)
+@@ -1610,7 +1610,7 @@ ifeq ($(OS_NAME),darwin)
  endif
  
  pdp_opengl_clean:
@@ -460,7 +459,7 @@ index 9ce18865..ae4a407c 100644
  	-rm -f -- $(PDP_OPENGL_BINARY)
  	-rm -f -- $(externals_src)/pdp_opengl/*.bak
  	-rm -f -- $(externals_src)/pdp_opengl/*.*~
-@@ -1657,25 +1657,25 @@ pidip_clean:
+@@ -1670,25 +1670,25 @@ pidip_clean:
  #------------------------------------------------------------------------------#
  # PLUGIN
  plugin:
@@ -492,7 +491,7 @@ index 9ce18865..ae4a407c 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1722,7 +1722,7 @@ rjlib_clean:
+@@ -1735,7 +1735,7 @@ rjlib_clean:
  rtcmix:
  	cd $(externals_src)/rtcmix-in-pd/RTcmix-pd-4.0.1.6 \
  		&& ./configure && make
@@ -501,7 +500,7 @@ index 9ce18865..ae4a407c 100644
  		PD_PATH=$(pd_src) \
  		CFLAGS="$(CFLAGS)" \
  		LINUXINCLUDE=-I$(pd_src)/src
-@@ -1739,32 +1739,32 @@ rtcmix_install:
+@@ -1752,32 +1752,32 @@ rtcmix_install:
  		$(DESTDIR)/$(objectsdir)/rtcmix
  
  rtcmix_clean:
@@ -542,7 +541,7 @@ index 9ce18865..ae4a407c 100644
  
  
  #------------------------------------------------------------------------------#
-@@ -1787,7 +1787,7 @@ tclpd_install: tclpd
+@@ -1800,7 +1800,7 @@ tclpd_install: tclpd
  #		$(DESTDIR)$(examplesdir)/$(TCLPD_NAME)
  
  tclpd_clean:
@@ -551,7 +550,7 @@ index 9ce18865..ae4a407c 100644
  	-rm -f -- $(TCLPD_LIB)
  	-rm -f -- $(externals_src)/tclpd/*.bak
  	-rm -f -- $(externals_src)/tclpd/*.*~
-@@ -1796,14 +1796,14 @@ tclpd_clean:
+@@ -1809,14 +1809,14 @@ tclpd_clean:
  #------------------------------------------------------------------------------#
  # TKWIDGETS
  tkwidgets:
@@ -569,7 +568,7 @@ index 9ce18865..ae4a407c 100644
  
  #------------------------------------------------------------------------------#
  # TOF
-@@ -2334,13 +2334,13 @@ iemxmlrpc_clean:
+@@ -2347,13 +2347,13 @@ iemxmlrpc_clean:
  #------------------------------------------------------------------------------#
  # EARPLUG
  earplug:
@@ -586,7 +585,7 @@ index 9ce18865..ae4a407c 100644
  
  
  
-@@ -2360,7 +2360,7 @@ etags:
+@@ -2373,7 +2373,7 @@ etags:
  	etags --append --language=none --regex="/proc[ \t]+\([^ \t]+\)/\1/" \
  		$(externals_src)/unauthorized/*/*.tk
  	find /usr/include -type f -name \*.h -exec etags -a '{}' \;

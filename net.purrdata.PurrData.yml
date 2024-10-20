@@ -41,7 +41,11 @@ modules:
   - name: purr-data
     buildsystem: autotools
     subdir: pd/src
-    config-opts: [--disable-portaudio, --enable-alsa, --disable-oss, --enable-jack]
+    config-opts:
+      - --disable-portaudio
+      - --enable-alsa
+      - --disable-oss
+      - --enable-jack
     sources:
       - type: git
         url: https://github.com/agraef/purr-data/
@@ -54,9 +58,9 @@ modules:
           version-query: $tag
           is-main-source: true
       - type: patch
-        path: patch/gnu-make-parallel.patch
-      - type: patch
-        path: patch/no-rsync-during-install.patch
+        paths:
+          - patch/gnu-make-parallel.patch
+          - patch/no-rsync-during-install.patch
 
   - name: pd-externals
     buildsystem: simple

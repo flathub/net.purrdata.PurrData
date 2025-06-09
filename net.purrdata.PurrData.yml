@@ -49,8 +49,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/agraef/purr-data/
-        tag: 2.20.0
-        commit: 89e45f0991cb2114eb9a99370077d99a8c27f40b
+        tag: 2.20.1
+        commit: fb224e0396cfa448c038038f25b19e19839ff069
         x-checker-data:
           type: json
           url: https://api.github.com/repos/agraef/purr-data/releases/latest
@@ -100,8 +100,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/agraef/purr-data/
-        tag: 2.20.0
-        commit: 89e45f0991cb2114eb9a99370077d99a8c27f40b
+        tag: 2.20.1
+        commit: fb224e0396cfa448c038038f25b19e19839ff069
         x-checker-data:
           type: json
           url: https://api.github.com/repos/agraef/purr-data/releases/latest
@@ -116,8 +116,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/agraef/purr-data/
-        tag: 2.20.0
-        commit: 89e45f0991cb2114eb9a99370077d99a8c27f40b
+        tag: 2.20.1
+        commit: fb224e0396cfa448c038038f25b19e19839ff069
         x-checker-data:
           type: json
           url: https://api.github.com/repos/agraef/purr-data/releases/latest
@@ -151,8 +151,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/agraef/purr-data/
-        tag: 2.20.0
-        commit: 89e45f0991cb2114eb9a99370077d99a8c27f40b
+        tag: 2.20.1
+        commit: fb224e0396cfa448c038038f25b19e19839ff069
         x-checker-data:
           type: json
           url: https://api.github.com/repos/agraef/purr-data/releases/latest

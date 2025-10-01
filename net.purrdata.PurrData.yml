@@ -1,6 +1,6 @@
 id: net.purrdata.PurrData
 runtime: org.freedesktop.Platform
-runtime-version: '23.08'
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 command: pd-wrapper.sh
 finish-args:
@@ -19,7 +19,7 @@ finish-args:
 add-extensions:
   org.freedesktop.LinuxAudio.Plugins:
     directory: extensions/Plugins
-    version: '23.08'
+    version: '24.08'
     add-ld-path: lib
     merge-dirs: ladspa
     subdirectories: true
@@ -73,7 +73,7 @@ modules:
              iemxmlrpc iem_delay iem_roomsim iem_spec2 iem_tab jasch_lib loaders-libdir lyonpotpourri mapping \
              markex maxlib mjlib moonlib motex mrpeach pan pdcontainer pddp pdlua pdogg plugin pmpd \
              rjlib sigpack smlib tof unauthorized vbap windowing
-      - make -j ${FLATPAK_BUILDER_N_JOBS} LDFLAGS=-L/app/lib prefix=/app fluid
+      - make -j ${FLATPAK_BUILDER_N_JOBS} "CFLAGS_ADD=-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration" LDFLAGS=-L/app/lib prefix=/app fluid
       - |
         make -j ${FLATPAK_BUILDER_N_JOBS} DESTDIR=/ LUA_LIBS="-L/app/lib -llua" prefix=/app \
              adaptive_install arraysize_install autotune_install bassemu_install \

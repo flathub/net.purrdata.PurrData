@@ -1,6 +1,6 @@
 id: net.purrdata.PurrData
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 command: pd-wrapper.sh
 finish-args:
@@ -19,7 +19,7 @@ finish-args:
 add-extensions:
   org.freedesktop.LinuxAudio.Plugins:
     directory: extensions/Plugins
-    version: '24.08'
+    version: '25.08'
     add-ld-path: lib
     merge-dirs: ladspa
     subdirectories: true
@@ -107,6 +107,9 @@ modules:
           url: https://api.github.com/repos/agraef/purr-data/releases/latest
           tag-query: .tag_name
           version-query: $tag
+      - type: patch
+        paths:
+          - patch/pd-external-mrpeach-buildfix.patch
 
   - name: pd-abstractions
     buildsystem: simple
